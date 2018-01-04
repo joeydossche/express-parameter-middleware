@@ -12,7 +12,7 @@ npm install express-parameter-middleware --save
 
 ### Importing the express parameter middleware into your project
 
-You need different imports to use this middleware. We recommend you to use different variables.
+You need different imports to use this middleware. We recommend you use different variables.
 
 ```js
 const EPM = require('express-parameter-middleware');
@@ -22,7 +22,7 @@ const Validators = EPM.Validators;
 ```
 
 ### Using the middleware
-First, you need to initialize the different parameters you want to check. This is possible to create a __array__ of objects _(each object represents a parameter)_.
+First using the middleware, initialise each parameter you wish to check. This allows you to create an\___array__\_of objects _(with each object representing a parameter)_
 
 ```js
 const Parameters = [
@@ -47,7 +47,7 @@ Then create a new object of the `CheckParameters` class and insert the __Paramet
 const LimitAndOffset = new CheckParameters(Parameters);
 ```
 
-After this step, you are ready to use it as middleware. Just enter __the kind of Check__ you want to do after your object and done.
+After this step, you are ready to use it as middleware. Just enter __the kind of Check__ you want to do. done.
 
 ```js
 app.get('/', LimitAndOffset.CheckQueryParam, function (req, res) {
@@ -83,7 +83,8 @@ By example:
 ```js
 CustomValidator(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/ , 'IP');
 ```
-You can use this Validator just like you would use another one `Validator.IP`.
+You can use this Validator as you would any other
+`Validator.IP`
 
 ## API
 
