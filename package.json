@@ -1,5 +1,5 @@
 {
-  "name": "query-string-check-middleware",
+  "name": "express-parameter-middleware",
   "version": "0.0.2",
   "description": "Validate the query parameters with regex",
   "main": "index.js",
