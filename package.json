@@ -1,0 +1,29 @@
+{
+  "name": "query-string-check-middleware",
+  "version": "0.0.1",
+  "description": "Validate the query parameters with regex",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeydossche/query-string-check-middleware.git"
+  },
+  "keywords": [
+    "middleware",
+    "querystring",
+    "queryparameter",
+    "regex",
+    "validate"
+  ],
+  "author": "Joey Dossche",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joeydossche/query-string-check-middleware/issues"
+  },
+  "homepage": "https://github.com/joeydossche/query-string-check-middleware#readme",
+  "devDependencies": {
+    "express": "^4.16.2"
+  }
+}
