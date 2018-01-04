@@ -1,16 +1,16 @@
-#Express Query Parameter Middleware
+# Express Query Parameter Middleware
 This is a tool to use as a __middleware__ to check the (query) parameter input from an HTTP request in express.
 
-##How to use
+## How to use
 
-###Install query parameter middleware
+### Install query parameter middleware
 
 ```bash
 npm install express-parameter-middleware --save
 ``` 
 
 
-###Importing the express parameter middleware into your project
+### Importing the express parameter middleware into your project
 
 You need different imports to use this middleware. We recommend you to use different variables.
 
@@ -21,7 +21,7 @@ const CheckParameters = EPM.CheckParameters;
 const Validators = EPM.Validators;
 ```
 
-###Using the middleware
+### Using the middleware
 First, you need to initialize the different parameters you want to check. This is possible to create a __array__ of objects _(each object represents a parameter)_.
 
 ```js
@@ -70,7 +70,7 @@ http://example.com/10/10
 ```
 
 
-###Custom Validator
+### Custom Validator
 You can initialinize your own Validators:
 
 ```js
@@ -85,9 +85,9 @@ CustomValidator(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/ , 'IP');
 ```
 You can use this Validator just like you would use another one `Validator.IP`.
 
-##API
+## API
 
-###Parameter options
+### Parameter options
 - `name`: No default value, any clean string;
 - `type`: undefined as default
     - `String`
@@ -111,6 +111,6 @@ You can use this Validator just like you would use another one `Validator.IP`.
     - `true`
     - `false`
 
-###CheckParameter options
+### CheckParameter options
 - `CheckParam`: checks the params in the request
 - `CheckQueryParam`: checks the query params in the request
