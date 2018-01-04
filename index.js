@@ -35,7 +35,7 @@ class CheckParameters {
         let parameterChecks = _parameters.map(param => {
             return new Promise((resolve, reject) => {
                 if (param.required) {
-                    if (req.query[param.name]) {
+                    if (!(req.query[param.name] === undefined)) {
                         if (_checkType(req.query[param.name], param.type)) {
 
                             _checkValidators(req.query[param.name], param.validator)
@@ -52,8 +52,9 @@ class CheckParameters {
                         reject(`The parameter ${param.name} is not defined as a query variable.`);
                     }
                 } else {
-                    if (req.query[param.name]) {
+                    if (!(req.query[param.name] === undefined)) {
                         if (_checkType(req.query[param.name], param.type)) {
+
                             _checkValidators(req.query[param.name], param.validator)
                                 .then(result => {
                                     resolve(result);
@@ -64,6 +65,8 @@ class CheckParameters {
                         } else {
                             reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
                         }
+                    } else {
+                        resolve(true);
                     }
                 }
             });
@@ -129,11 +132,13 @@ class CheckParameters {
                 });
                 Promise.all(promises)
                     .then((validate) => {
-                       if(validate.every(function (value) { return (value === true) })){
-                           resolve(true);
-                       } else {
-                           reject(false)
-                       }
+                        if (validate.every(function (value) {
+                                return (value === true)
+                            })) {
+                            resolve(true);
+                        } else {
+                            reject(false)
+                        }
 
                     })
                     .catch((error) => {
@@ -149,7 +154,7 @@ class CheckParameters {
         let parameterChecks = _parameters.map(param => {
             return new Promise((resolve, reject) => {
                 if (param.required) {
-                    if (req.params[param.name]) {
+                    if (!(req.params[param.name] === undefined)) {
                         if (_checkType(req.params[param.name], param.type)) {
 
                             _checkValidators(req.params[param.name], param.validator)
@@ -166,7 +171,7 @@ class CheckParameters {
                         reject(`The parameter ${param.name} is not defined as a query variable.`);
                     }
                 } else {
-                    if (req.params[param.name]) {
+                    if (!(req.params[param.name] === undefined)) {
                         if (_checkType(req.params[param.name], param.type)) {
                             _checkValidators(req.params[param.name], param.validator)
                                 .then(result => {
@@ -178,6 +183,8 @@ class CheckParameters {
                         } else {
                             reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
                         }
+                    } else {
+                        resolve(true);
                     }
                 }
             });
@@ -243,7 +250,9 @@ class CheckParameters {
                 });
                 Promise.all(promises)
                     .then((validate) => {
-                        if(validate.every(function (value) { return (value === true) })){
+                        if (validate.every(function (value) {
+                                return (value === true)
+                            })) {
                             resolve(true);
                         } else {
                             reject(false)
