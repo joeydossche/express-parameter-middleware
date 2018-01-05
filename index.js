@@ -1,5 +1,4 @@
 const DefaultValidators = require('./defaultValidators');
-let _parameters;
 
 class Parameter {
     constructor(name, type = undefined, validator = [], required = false) {
@@ -27,12 +26,22 @@ class Parameter {
 }
 
 class CheckParameters {
-    constructor(parameters) {
-        _parameters = parameters;
+    get parameters() {
+        return this._parameters;
     }
 
-    CheckQueryParam(req, res, next) {
-        let parameterChecks = _parameters.map(param => {
+    set parameters(value) {
+        this._parameters = value;
+
+    }
+    constructor(parameters) {
+        this._parameters = parameters;
+        this.CheckQueryParam = this.CheckQueryParam.bind(this);
+        this.CheckParam = this.CheckParam.bind(this);
+    }
+
+    CheckQueryParam (req, res, next) {
+        let parameterChecks = this._parameters.map(param => { // TypeError: Cannot read property '_parameters' of undefined
             return new Promise((resolve, reject) => {
                 if (param.required) {
                     if (!(req.query[param.name] === undefined)) {
@@ -151,7 +160,7 @@ class CheckParameters {
 
 
     CheckParam(req, res, next) {
-        let parameterChecks = _parameters.map(param => {
+        let parameterChecks = this._parameters.map(param => {
             return new Promise((resolve, reject) => {
                 if (param.required) {
                     if (!(req.params[param.name] === undefined)) {
