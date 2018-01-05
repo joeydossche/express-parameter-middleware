@@ -1,6 +1,6 @@
 {
   "name": "express-parameter-middleware",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Validate the query parameters with regex",
   "main": "index.js",
   "scripts": {

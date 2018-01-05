@@ -41,12 +41,11 @@ class CheckParameters {
     }
 
     CheckQueryParam (req, res, next) {
-        let parameterChecks = this._parameters.map(param => { // TypeError: Cannot read property '_parameters' of undefined
+        let parameterChecks = this._parameters.map(param => {
             return new Promise((resolve, reject) => {
                 if (param.required) {
                     if (!(req.query[param.name] === undefined)) {
                         if (_checkType(req.query[param.name], param.type)) {
-
                             _checkValidators(req.query[param.name], param.validator)
                                 .then(result => {
                                     resolve(result);
@@ -83,7 +82,6 @@ class CheckParameters {
         Promise.all(parameterChecks)
             .then(() => next())
             .catch((error) => {
-                console.error(error);
                 res.status(400).send(error)
             });
 
@@ -135,7 +133,9 @@ class CheckParameters {
             return new Promise((resolve, reject) => {
                 let promises = validators.map(validator => {
                     return new Promise((resolve) => {
-                        resolve((DefaultValidators[validator.Name].Validate(valueToCheck)));
+                        resolve(DefaultValidators[validator.Name].Validate(valueToCheck));
+                    }).catch(error => {
+                        reject(error);
                     });
 
                 });
@@ -201,7 +201,6 @@ class CheckParameters {
         Promise.all(parameterChecks)
             .then(() => next())
             .catch((error) => {
-                console.error(error);
                 res.status(400).send(error)
             });
 
@@ -281,7 +280,9 @@ const AddToDefaultValidators = function (regex, validatorName) {
     DefaultValidators[validatorName] = {
         Name: validatorName,
         Validate: (value) => {
+            
             return (regex.test(value));
+            
         }
     }
 };
