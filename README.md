@@ -98,7 +98,8 @@ You can use this Validator just like you would use another one `Validator.IP`.
     - `Date`
     - `Object`
     - `undefined`
-    - `any`
+    - `'any'`
+    - `Array`
 - `validator`: array of possible validators
     - `Validator.Base64`
     - `Validator.DateTime`

@@ -37,19 +37,18 @@ class CheckParameters {
                 if (param.required) {
                     if (req.query[param.name]) {
                         if (_checkType(req.query[param.name], param.type)) {
-
                             _checkValidators(req.query[param.name], param.validator)
                                 .then(result => {
                                     resolve(result);
                                 })
                                 .catch(error => {
-                                    reject(`The parameter ${param.name} is not conform with the validators.`);
+                                    reject(new TypeError(`The parameter ${param.name} is not conform with the validators.`));
                                 })
                         } else {
-                            reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
+                            reject(new TypeError(`The parameter ${param.name} is not defined as a ${param.type.name}.`));
                         }
                     } else {
-                        reject(`The parameter ${param.name} is not defined as a query variable.`);
+                        reject(new ReferenceError(`The parameter ${param.name} is not defined as a query variable.`));
                     }
                 } else {
                     if (req.query[param.name]) {
@@ -59,10 +58,10 @@ class CheckParameters {
                                     resolve(result);
                                 })
                                 .catch(error => {
-                                    reject(`The parameter ${param.name} is not conform with the validators.`);
+                                    reject( new TypeError(`The parameter ${param.name} is not conform with the validators.`));
                                 })
                         } else {
-                            reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
+                            reject(new TypeError(`The parameter ${param.name} is not defined as a ${param.type.name}.`));
                         }
                     }
                 }
@@ -116,6 +115,9 @@ class CheckParameters {
             if (type === Object) {
                 return (typeof(valueToCheck) === 'object');
             }
+            if (type === Array) {
+                return (Array.isArray(valueToCheck));
+            }
 
         }
 
@@ -129,11 +131,13 @@ class CheckParameters {
                 });
                 Promise.all(promises)
                     .then((validate) => {
-                       if(validate.every(function (value) { return (value === true) })){
-                           resolve(true);
-                       } else {
-                           reject(false)
-                       }
+                        if (validate.every(function (value) {
+                                return (value === true)
+                            })) {
+                            resolve(true);
+                        } else {
+                            reject(false)
+                        }
 
                     })
                     .catch((error) => {
@@ -157,13 +161,13 @@ class CheckParameters {
                                     resolve(result);
                                 })
                                 .catch(error => {
-                                    reject(`The parameter ${param.name} is not conform with the validators.`);
+                                    reject(new TypeError(`The parameter ${param.name} is not conform with the validators.`));
                                 })
                         } else {
-                            reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
+                            reject(new ReferenceError(`The parameter ${param.name} is not defined as a ${param.type.name}.`));
                         }
                     } else {
-                        reject(`The parameter ${param.name} is not defined as a query variable.`);
+                        reject(new ReferenceError(`The parameter ${param.name} is not defined as a query variable.`));
                     }
                 } else {
                     if (req.params[param.name]) {
@@ -173,10 +177,10 @@ class CheckParameters {
                                     resolve(result);
                                 })
                                 .catch(error => {
-                                    reject(`The parameter ${param.name} is not conform with the validators.`);
+                                    reject(new TypeError(`The parameter ${param.name} is not conform with the validators.`));
                                 })
                         } else {
-                            reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
+                            reject(new TypeError(`The parameter ${param.name} is not defined as a ${param.type.name}.`));
                         }
                     }
                 }
@@ -185,7 +189,6 @@ class CheckParameters {
         Promise.all(parameterChecks)
             .then(() => next())
             .catch((error) => {
-                console.error(error);
                 res.status(400).send(error)
             });
 
@@ -231,6 +234,11 @@ class CheckParameters {
                 return (typeof(valueToCheck) === 'object');
             }
 
+            if (type === Array) {
+                return (Array.isArray(valueToCheck));
+            }
+
+
         }
 
         function _checkValidators(valueToCheck, validators) {
@@ -243,7 +251,9 @@ class CheckParameters {
                 });
                 Promise.all(promises)
                     .then((validate) => {
-                        if(validate.every(function (value) { return (value === true) })){
+                        if (validate.every(function (value) {
+                                return (value === true)
+                            })) {
                             resolve(true);
                         } else {
                             reject(false)
