@@ -99,7 +99,8 @@ You can use this Validator as you would any other
     - `Date`
     - `Object`
     - `undefined`
-    - `any`
+    - `'any'`
+    - `Array`
 - `validator`: array of possible validators
     - `Validator.Base64`
     - `Validator.DateTime`

@@ -51,13 +51,13 @@ class CheckParameters {
                                     resolve(result);
                                 })
                                 .catch(error => {
-                                    reject(`The parameter ${param.name} is not conform with the validators.`);
+                                    reject(new TypeError(`The parameter ${param.name} is not conform with the validators.`));
                                 })
                         } else {
-                            reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
+                            reject(new TypeError(`The parameter ${param.name} is not defined as a ${param.type.name}.`));
                         }
                     } else {
-                        reject(`The parameter ${param.name} is not defined as a query variable.`);
+                        reject(new ReferenceError(`The parameter ${param.name} is not defined as a query variable.`));
                     }
                 } else {
                     if (!(req.query[param.name] === undefined)) {
@@ -68,10 +68,10 @@ class CheckParameters {
                                     resolve(result);
                                 })
                                 .catch(error => {
-                                    reject(`The parameter ${param.name} is not conform with the validators.`);
+                                    reject( new TypeError(`The parameter ${param.name} is not conform with the validators.`));
                                 })
                         } else {
-                            reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
+                            reject(new TypeError(`The parameter ${param.name} is not defined as a ${param.type.name}.`));
                         }
                     } else {
                         resolve(true);
@@ -125,6 +125,9 @@ class CheckParameters {
 
             if (type === Object) {
                 return (typeof(valueToCheck) === 'object');
+            }
+            if (type === Array) {
+                return (Array.isArray(valueToCheck));
             }
 
         }
@@ -171,13 +174,13 @@ class CheckParameters {
                                     resolve(result);
                                 })
                                 .catch(error => {
-                                    reject(`The parameter ${param.name} is not conform with the validators.`);
+                                    reject(new TypeError(`The parameter ${param.name} is not conform with the validators.`));
                                 })
                         } else {
-                            reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
+                            reject(new ReferenceError(`The parameter ${param.name} is not defined as a ${param.type.name}.`));
                         }
                     } else {
-                        reject(`The parameter ${param.name} is not defined as a query variable.`);
+                        reject(new ReferenceError(`The parameter ${param.name} is not defined as a query variable.`));
                     }
                 } else {
                     if (!(req.params[param.name] === undefined)) {
@@ -187,10 +190,10 @@ class CheckParameters {
                                     resolve(result);
                                 })
                                 .catch(error => {
-                                    reject(`The parameter ${param.name} is not conform with the validators.`);
+                                    reject(new TypeError(`The parameter ${param.name} is not conform with the validators.`));
                                 })
                         } else {
-                            reject(`The parameter ${param.name} is not defined as a ${param.type.name}.`);
+                            reject(new TypeError(`The parameter ${param.name} is not defined as a ${param.type.name}.`));
                         }
                     } else {
                         resolve(true);
@@ -245,6 +248,11 @@ class CheckParameters {
             if (type === Object) {
                 return (typeof(valueToCheck) === 'object');
             }
+
+            if (type === Array) {
+                return (Array.isArray(valueToCheck));
+            }
+
 
         }
 
